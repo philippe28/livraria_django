@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %} Crud livro {% endblock title %}
+
+{% block top %} Crud livro {% endblock top %}
+
+{% block body %}
+{% csrf_token %}
+<form action="{% url 'livro.save' %}" method="post">
+		
+		{% csrf_token %}
+		
+		{{ livro_form.as_p }}
+		
+
+		<button type="submit">Salvar</button>
+
+	</form>
+
+<table>
+	<thead>
+		<tr>
+			<th>Título</th>
+			<th>Descriçao</th>
+			<th>Status</th>
+			<th>Nome</th>
+			<th>E-Mail</th>
+			<th>Ações</th>
+		</tr>
+	</thead>
+	<tbody>
+		{%for livro in livro_list%}
+			<tr>
+
+				<td>{{livro.titulo}}</td>
+				<td>{{livro.descricao|truncatechars:20}}</td>
+				<td>{%if livro.status %} Sim {% else %} Não {% endif %} </td>
+				<td>{{livro.nome}}</td>
+				<td>{{livro.email}}</td>
+				<td>
+				<a href="/edit/{{livro.id}}">editar</a>|<a href="/remove/{{livro.id}}">ecluir</a>
+				</td>
+			</tr>
+	</tbody>
+		{%endfor%}
+
+</table>
+{%endblock body%}
+{%block footer%} Todos os direitos reservados {%endblock%}
